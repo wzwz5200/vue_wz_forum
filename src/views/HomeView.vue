@@ -89,7 +89,7 @@ onMounted(() => {
 </div>
 
 
-  <n-card   class="tips"
+  <n-card  hoverable  class="tips"
 
   >
     
@@ -128,10 +128,34 @@ onMounted(() => {
   </n-card>
 
 
+  <n-card class="post" hoverable>
+
+    
+
+
+  </n-card>
+
+
+
 </template>
 
 
 <style>
+
+
+.post{
+ 
+  max-width: 41.5%;
+  min-height: 450px;
+  background-color: transparent;
+  
+
+  overflow: auto;
+  position: relative;
+  left: 34%;
+  top: -550px;
+
+}
 
 
 .tips{
