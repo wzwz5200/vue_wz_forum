@@ -1,6 +1,6 @@
-# vue_forum
+# vue_forum (未开发完)
+![本地路径](./screenshot-1724163733553.png "相对路径演示,上一级目录")
 
-This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
 
