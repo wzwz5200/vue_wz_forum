@@ -1,7 +1,5 @@
-
 <script setup lang="ts">
 
-import TheWelcome from '../components/TheWelcome.vue'
 
 import { onMounted, ref } from 'vue'
 
@@ -42,10 +40,11 @@ onMounted(() => {
   ]
 })
 
-</script>
 
+</script>
 <template>
- <n-grid x-gap="12"  :y-gap="125" :cols="1">
+
+<n-grid x-gap="12"  :y-gap="125" :cols="1">
       <n-gi v-for='(item,index) in lists'>
       <div class="light-green"  >
 
@@ -57,7 +56,7 @@ onMounted(() => {
     />
 
     <div class="ghb">
-      <h3 style="position: absolute; left: 10%; top: -8%;">[steam离线账号分享] 博德之门3 全DLC Baldur's Gate 3</h3>
+      <h3 style="position: absolute; left: 10%; top: -8%;">[游戏专区] 博德之门3 全DLC Baldur's Gate 3</h3>
      
     </div>
   
@@ -80,73 +79,3 @@ onMounted(() => {
     
   </n-grid>
 </template>
-
-<style>
-
-
-.user1{
-
-font-size: x-small;
-position: absolute;
-left: 15%;
-top: 61%;
-
-}
-
-
-.ghb{
-
-background-color: rgb(17, 22, 26);
-max-height: 77%;
-height:auto;
-clear:both;
-word-break:break-all;
-
-
-}
-
-
-.icon{
-
-
-
-
-position: absolute;
-left: 10.3%;
-top: 70%;
-
-
-
-}
-
-
-
-
-.light-green {
-  min-height: 110px;
-  width: 43%;
-  position: absolute;
-  height:auto;
-
- 
-  left: 32%;
-  
-  
-
-  box-shadow: 1px 1px 10px 1px #080808;
-}
-
-.avatar{
-
-
-position: absolute;
-left: 3%;
-top: 16%;
-
-
-
-}
-
-
-
-</style>

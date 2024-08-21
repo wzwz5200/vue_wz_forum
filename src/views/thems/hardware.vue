@@ -1,8 +1,6 @@
 
 <script setup lang="ts">
 
-import TheWelcome from '../components/TheWelcome.vue'
-
 import { onMounted, ref } from 'vue'
 
 interface ListItem {
@@ -41,11 +39,13 @@ onMounted(() => {
     },
   ]
 })
-
 </script>
 
 <template>
- <n-grid x-gap="12"  :y-gap="125" :cols="1">
+
+
+
+<n-grid x-gap="12"  :y-gap="125" :cols="1">
       <n-gi v-for='(item,index) in lists'>
       <div class="light-green"  >
 
@@ -57,7 +57,7 @@ onMounted(() => {
     />
 
     <div class="ghb">
-      <h3 style="position: absolute; left: 10%; top: -8%;">[steam离线账号分享] 博德之门3 全DLC Baldur's Gate 3</h3>
+      <h3 style="position: absolute; left: 10%; top: -8%;">[硬件] AMD sTR5 EEB 工作站主板, 7 PCIe 5.0 x16 插槽, 支持多 GPU, 强大的 32+3+3+3 供电模组设计, 支持 CPU 和内存超频, 4 PCIe 5.0 M.2 插槽, 双 10 Gb LAN, PCIe</h3>
      
     </div>
   
@@ -79,74 +79,9 @@ onMounted(() => {
     </n-gi>
     
   </n-grid>
+
+
+
+
+
 </template>
-
-<style>
-
-
-.user1{
-
-font-size: x-small;
-position: absolute;
-left: 15%;
-top: 61%;
-
-}
-
-
-.ghb{
-
-background-color: rgb(17, 22, 26);
-max-height: 77%;
-height:auto;
-clear:both;
-word-break:break-all;
-
-
-}
-
-
-.icon{
-
-
-
-
-position: absolute;
-left: 10.3%;
-top: 70%;
-
-
-
-}
-
-
-
-
-.light-green {
-  min-height: 110px;
-  width: 43%;
-  position: absolute;
-  height:auto;
-
- 
-  left: 32%;
-  
-  
-
-  box-shadow: 1px 1px 10px 1px #080808;
-}
-
-.avatar{
-
-
-position: absolute;
-left: 3%;
-top: 16%;
-
-
-
-}
-
-
-
-</style>
