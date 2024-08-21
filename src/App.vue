@@ -54,10 +54,14 @@ import WelcomeItem from './components/WelcomeItem.vue';
       <n-layout-content content-style="padding: 10px 0px 0px ;">
       <WelcomeItem></WelcomeItem>
       </n-layout-content>
-      <n-layout-footer >
+      <n-layout-footer class="footer" >
        
    
-           <RouterView />   
+        <div>
+
+        </div>
+      
+         
     
     
       </n-layout-footer>
@@ -66,6 +70,7 @@ import WelcomeItem from './components/WelcomeItem.vue';
 
   
   </n-space>
+  <RouterView />   
   <n-global-style />
   </n-config-provider>
   
@@ -74,6 +79,15 @@ import WelcomeItem from './components/WelcomeItem.vue';
 </template>
 
 <style scoped>
+
+.footer{
+  height: 100%;
+  width: 100%;
+
+  background-color: antiquewhite;
+
+}
+
 
 .divbox1{
   position: relative;

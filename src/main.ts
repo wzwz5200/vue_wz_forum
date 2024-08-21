@@ -7,7 +7,7 @@ import App from './App.vue'
 import router from './router'
 
 import naive from 'naive-ui'
-
+import "amfe-flexible/index.js";
 // 等宽字体
 
 const app = createApp(App)
