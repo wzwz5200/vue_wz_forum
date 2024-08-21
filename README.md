@@ -1,5 +1,5 @@
 # vue_forum (未开发完)
-![本地路径](./screenshot-1724163733553.png "相对路径演示,上一级目录")
+![本地路径](./屏幕截图_21-8-2024_125230_localhost.jpeg "相对路径演示,上一级目录")
 
 
 ## Recommended IDE Setup
