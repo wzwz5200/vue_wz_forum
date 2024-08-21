@@ -55,26 +55,34 @@ onMounted(() => {
 
 
 
-    <n-grid x-gap="12"  :y-gap="8" :cols="1">
+    <n-grid x-gap="12"  :y-gap="50" :cols="1">
     <n-gi v-for='(item,index) in lists'>
     <n-button text class="but8">
     <template #icon>
       <n-icon>
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16"></path><path d="M8 12h8"></path><path d="M6 18h12"></path></g></svg>
       </n-icon>
-      </template>
-      {{ item.name }}
+  
+    </template>
+  
+    
+    <div style=" height: 10%; width: 500%;">
+
+      <H3>{{ item.name }}</H3>
+    </div>
+      
+
+
+ 
       </n-button>
+   
     </n-gi>
  
   
   </n-grid>
 
   
-    <template #action>
-<!--  
-       -->
-    </template>
+
   
 
   
@@ -85,6 +93,7 @@ onMounted(() => {
   
 
 
+
   
 </div>
 
@@ -92,6 +101,20 @@ onMounted(() => {
 
 
 
+<!-- <n-grid x-gap="12"  :y-gap="8" :cols="1">
+    <n-gi v-for='(item,index) in lists'>
+
+      <div class=""></div>
+    </n-gi>
+ 
+  
+  </n-grid> -->
+
+  
+
+
+
+<!-- 
   <n-card  style="position: relative; " hoverable  class="tips"
 
   >
@@ -128,9 +151,9 @@ onMounted(() => {
     </n-icon>
     
  
-  </n-card>
+  </n-card> -->
 
-  
+<!--   
   <n-grid x-gap="12"  :y-gap="8" :cols="1">
     <n-gi v-for='(item,index) in lists'>
     <div class="post_box" >
@@ -173,6 +196,42 @@ onMounted(() => {
     </n-gi>
  
   
+  </n-grid> -->
+
+
+    <n-grid x-gap="12"  :y-gap="125" :cols="1">
+      <n-gi v-for='(item,index) in lists'>
+      <div class="light-green"  >
+
+        <n-avatar
+      round
+      size="large"
+      src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg"
+      class="avatar"
+    />
+
+    <div class="ghb">
+      <h3 style="position: absolute; left: 10%; top: -8%;">[steam离线账号分享] 博德之门3 全DLC Baldur's Gate 3</h3>
+     
+    </div>
+  
+
+        <!-- <n-card title="卡片">
+        卡片内容
+       </n-card> -->
+
+       <n-icon size="20" class="icon">
+
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><g><g><path d="M448,248L288,96v85.334C138.666,202.667,85.333,309.334,64,416c53.333-74.666,117.333-108.802,224-108.802v87.469L448,248
+          z"></path></g></g></svg>
+      </n-icon>
+
+      <h3 class="user1"> 回复于：{{ item.name }} 2小时前</h3>
+
+      </div>
+
+    </n-gi>
+    
   </n-grid>
 
 
@@ -183,15 +242,35 @@ onMounted(() => {
 
 <style>
 
+.user1{
+
+  font-size: x-small;
+  position: absolute;
+  left: 15%;
+  top: 61%;
+
+}
+
+.ghb{
+
+  background-color: rgb(17, 22, 26);
+  max-height: 77%;
+  height:auto;
+  clear:both;
+  word-break:break-all;
+
+
+}
+
+
 .icon{
 
 
 
 
-  width: 40px;
-  height: 40px;
   position: absolute;
-  left: 31px;
+  left: 10.3%;
+  top: 70%;
 
 
 
@@ -200,11 +279,11 @@ onMounted(() => {
 
 .avatar{
 
-  height: 40px;
-  width: 35px;
-  position: relative;
-  top: 1px;
-  left: 0%;
+
+  position: absolute;
+  left: 3%;
+  top: 16%;
+
  
 
 }
@@ -270,7 +349,8 @@ onMounted(() => {
 
 .but8{
 
-  position: relative;
+  position: absolute;
+  overflow:hidden;
   left: 15%;
 
 
@@ -278,12 +358,21 @@ onMounted(() => {
 
 
 .light-green {
-  height: 100px;
-  background-color: rgba(0, 128, 0, 0.12);
+  min-height: 110px;
+  width: 43%;
+  position: absolute;
+  height:auto;
+
+ 
+  left: 32%;
+  
+  
+
+  box-shadow: 1px 1px 10px 1px #080808;
 }
 .green {
   height: 100px;
-  background-color: rgba(0, 128, 0, 0.24);
+  background-color: #101014
 }
 
 
@@ -305,16 +394,18 @@ onMounted(() => {
 .card{
  
   height: 100%;
+  position: absolute;
 
 }
 
 
 .tabbox{
 
-height: 450px;
-width: 240px;
+height: 50%;
+overflow:hidden;
+width: 10%;
 background-color: rgb(27, 31, 31);
-position: relative;
+position: absolute;
 left: 20%;
 
 
