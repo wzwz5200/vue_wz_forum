@@ -89,7 +89,10 @@ onMounted(() => {
 </div>
 
 
-  <n-card  hoverable  class="tips"
+
+
+
+  <n-card  style="position: relative; " hoverable  class="tips"
 
   >
     
@@ -127,13 +130,51 @@ onMounted(() => {
  
   </n-card>
 
+  
+  <n-grid x-gap="12"  :y-gap="8" :cols="1">
+    <n-gi v-for='(item,index) in lists'>
+    <div class="post_box" >
 
-  <n-card class="post" hoverable>
+      <n-card style="height: 110px;">
 
-    
+       <div class="icon">
+        <n-avatar
+      round
+      size="large"
+      src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg"
+    />
+       </div>
+
+       <div class="post_box_top">
+
+        <div style=" width: 100%; height: 84px; position: absolute; top: -5px;">
+           <h3> 人中之龙8究极版 [2] Like a DragonInfinite Wealth Ultimate Edition STEAM游戏</h3>
+
+     
+
+        </div>
+        
+        <h3 style="position: relative; top: 74.1%; left: 4%; font-size: xx-small;">回复于{{  }}</h3>      
 
 
-  </n-card>
+        <n-icon size="20" style="top: 45px; left: -1px;">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><g><g><path d="M448,248L288,96v85.334C138.666,202.667,85.333,309.334,64,416c53.333-74.666,117.333-108.802,224-108.802v87.469L448,248
+              z"></path></g></g></svg>
+  
+      </n-icon>
+       </div>
+
+
+     </n-card>
+
+
+
+    </div>
+    </n-gi>
+ 
+  
+  </n-grid>
+
 
 
 
@@ -142,6 +183,59 @@ onMounted(() => {
 
 <style>
 
+.icon{
+
+
+
+
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  left: 31px;
+
+
+
+}
+
+
+.avatar{
+
+  height: 40px;
+  width: 35px;
+  position: relative;
+  top: 1px;
+  left: 0%;
+ 
+
+}
+
+
+.post_box_top{
+
+  
+  width: 670px;
+  height: 100px;
+  position: absolute;
+  left: 11%;
+  top: -4%;
+ 
+
+}
+
+.post_box{
+
+  /* overflow-y:hidden; */
+ 
+  background-color: aqua;
+  width: 41.5%;
+  min-height: 100px;
+
+  position: relative;
+  left: 34%;
+  top: -500%;
+
+
+}
 
 .post{
  
