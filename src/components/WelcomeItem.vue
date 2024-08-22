@@ -45,6 +45,7 @@ top: 60%;
 
 .welcome{
 
+
   background: linear-gradient(#7c7c8d, rgb(121, 120, 145));
  
 
@@ -53,6 +54,7 @@ top: 60%;
   height: 140px;
  position: relative;
  left: 0.5%;
+
 
   
 

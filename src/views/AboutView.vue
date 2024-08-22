@@ -3,6 +3,10 @@
 
 import TheWelcome from '../components/TheWelcome.vue'
 
+import { useCounterStore } from '@/stores/counter';
+
+
+const useCounter = useCounterStore()
 import { onMounted, ref } from 'vue'
 
 interface ListItem {
@@ -15,39 +19,25 @@ const lists = ref<ListItem[]>([])
 
 
 
-
+// 从 lists 中获取 title 值
+const titleValue = useCounter.txt.map(item => item.title)   
+const cStore = useCounterStore()
 onMounted(() => {
- 
-  lists.value = [
-    {
-      imgUrl:
-        'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg',
-      name: '游戏',
-    },
-    {
-      imgUrl:
-        'https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg',
-      name: '硬件',
-    },
-    {
-      imgUrl:
-        'https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg',
-      name: '软件',
-    },
-    {
-      imgUrl:
-        'https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg',
-      name: 'steam专区',
-    },
-  ]
+
+
 })
+function test(){
+
+  console.log(lists)
+
+}
 
 </script>
 
 <template>
- <n-grid x-gap="12"  :y-gap="125" :cols="1">
-      <n-gi v-for='(item,index) in lists'>
-      <div class="light-green"  >
+ <n-grid x-gap="12"  :y-gap="15" :cols="1">
+      <n-gi v-for='(cv,index) in useCounter.txt' :key="index">
+      <div class="light-green"  @click="test()" >
 
         <n-avatar
       round
@@ -57,7 +47,7 @@ onMounted(() => {
     />
 
     <div class="ghb">
-      <h3 style="position: absolute; left: 10%; top: -8%;">[steam离线账号分享] 博德之门3 全DLC Baldur's Gate 3</h3>
+      <h3 style="position: absolute; left: 10%; top: -8%;">{{ cv.title  }}</h3>
      
     </div>
   
@@ -72,7 +62,7 @@ onMounted(() => {
           z"></path></g></g></svg>
       </n-icon>
 
-      <h3 class="user1"> 回复于：{{ item.name }} 2小时前</h3>
+      <h3 class="user1"> 回复于：{{cv.updated_at  }}</h3>
 
       </div>
 
@@ -83,69 +73,6 @@ onMounted(() => {
 
 <style>
 
-
-.user1{
-
-font-size: x-small;
-position: absolute;
-left: 15%;
-top: 61%;
-
-}
-
-
-.ghb{
-
-background-color: rgb(17, 22, 26);
-max-height: 77%;
-height:auto;
-clear:both;
-word-break:break-all;
-
-
-}
-
-
-.icon{
-
-
-
-
-position: absolute;
-left: 10.3%;
-top: 70%;
-
-
-
-}
-
-
-
-
-.light-green {
-  min-height: 110px;
-  width: 43%;
-  position: absolute;
-  height:auto;
-
- 
-  left: 32%;
-  
-  
-
-  box-shadow: 1px 1px 10px 1px #080808;
-}
-
-.avatar{
-
-
-position: absolute;
-left: 3%;
-top: 16%;
-
-
-
-}
 
 
 
