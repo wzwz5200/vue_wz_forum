@@ -1,54 +1,111 @@
 <script setup lang="ts">
 import router from '@/router';
 import TheWelcome from '../components/TheWelcome.vue'
-
+import WelcomeItem from '@/components/WelcomeItem.vue';
 import { onMounted, ref } from 'vue'
+import { http } from '@/axios';
 
-interface ListItem {
-  imgUrl: string
-  name: string
+import { useCounterStore } from '@/stores/counter';
+
+const cStore = useCounterStore()
+interface Tag {
+
+  name: string;
 }
 
-const loading = ref(true)
-const lists = ref<ListItem[]>([])
+interface Category {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  name: string;
+  Articles: null | any;
+}
+
+
+interface Article {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  title: string;
+  desc: string;
+  content: string;
+  img: string;
+  type: number;
+  status: number;
+  is_top: boolean;
+  is_delete: boolean;
+  original_url: string;
+  category_id: number;
+  tags: Tag[];
+  category: Category;
+  user: null | any;
+}
+
+interface ListItem {
+    content: string;
+    created_at: string;
+    desc: string;
+    id: number;
+    img: string;
+    title: string;
+    updated_at: string;
+
+}
+
+
+const listsz = ref<ListItem[]>([])
 
 
 
 
-onMounted(() => {
+const lists = ref<Tag[]>([])
+
+onMounted(async () => {
  
-  lists.value = [
-    {
-      imgUrl:
-        'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg',
-      name: '游戏',
-    },
-    {
-      imgUrl:
-        'https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg',
-      name: '硬件',
-    },
-    {
-      imgUrl:
-        'https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg',
-      name: '软件',
-    },
-    {
-      imgUrl:
-        'https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg',
-      name: 'steam专区',
-    },
-  ]
+  
+  const res =    await http.get("/page/list")
+  const extractedData = res.data
+  
+  
+  lists.value = extractedData.tag
+  
+  console.log(lists.value)
+  
+
+  console.log(lists.value)
 })
 
 
-function qianhuan(){
+const loading = ref(true)
+
+function Tohome(){
+
+router.push({ path: '/'}) 
+
+}
+
+
+async function qianhuan(name: any){
+
+  console.log("w")
 //传入主题参数到帖子组件使用get方法获取传入主题的所有帖子
 //待实现
-  router.push({
-        name:'Game',
-    
-    })
+
+
+
+
+const res =    await http.get("/them/list",{  params: {   thems : cStore.thems
+    } })
+    const extractedData = res.data
+
+  
+    cStore.listsz = extractedData.tag
+    console.log("hello1",cStore.listsz)
+  
+
+
+  cStore.thems = name
+  router.push({ name: 'allthems' })
 
 
 }
@@ -60,43 +117,59 @@ function qianhuan(){
 
 
 <template>
+     
+      <WelcomeItem ></WelcomeItem>
 
 <div class="tabbox">
 
   <n-card  class="card" >
  
-
-
-
-    <n-grid x-gap="12"  :y-gap="50" :cols="1">
-    <n-gi v-for='(item,index) in lists'>
-    <n-button text class="but8" @click="qianhuan()">
-    <template #icon>
-      <n-icon>
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16"></path><path d="M8 12h8"></path><path d="M6 18h12"></path></g></svg>
-      </n-icon>
-  
-    </template>
-  
-    
-    <div style=" height: 10%; width: 500%;">
-
-      <H3>{{ item.name }}</H3>
-    </div>
+    <n-button  @click="Tohome()" text class="homebutton" >
+          <template #icon>
+            <n-icon>
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16"></path><path d="M8 12h8"></path><path d="M6 18h12"></path></g></svg>
+            </n-icon>
+        
+          </template>
+        
+       
+          <h3>首页</h3>
+            
       
-
-
- 
-      </n-button>
-   
-    </n-gi>
- 
-  
-  </n-grid>
+      
+       
+            </n-button>
 
   
+  <n-grid x-gap="12"  :y-gap="15" :cols="1">
 
-  
+
+          <n-gi  v-for="tag in  lists" >
+          <n-button text class="but8" @click="qianhuan(tag.name)">
+          <template #icon>
+            <n-icon>
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16"></path><path d="M8 12h8"></path><path d="M6 18h12"></path></g></svg>
+            </n-icon>
+        
+          </template>
+        
+          
+          <div style=" height: 10%; width: 500%;">
+      
+            <h3>{{ tag.name }}</h3>
+          </div>
+            
+      
+      
+       
+            </n-button>
+         
+          </n-gi>
+       
+        
+        </n-grid>
+
+
 
   
 
@@ -210,14 +283,35 @@ function qianhuan(){
  
   
   </n-grid> -->
-<RouterView></RouterView>
+
+<Suspense>
+  <RouterView class="view"></RouterView>
 
 
+</Suspense>
 
 </template>
 
 
 <style>
+
+
+.homebutton{
+
+  position: absolute;
+  left: 24%;
+
+
+
+}
+
+
+.view{
+
+
+
+}
+
 
 .user1{
 
@@ -326,9 +420,10 @@ function qianhuan(){
 
 .but8{
 
-  position: absolute;
+  position: relative;
   overflow:hidden;
   left: 15%;
+  top:100%;
 
 
 }
@@ -337,13 +432,15 @@ function qianhuan(){
 .light-green {
   min-height: 110px;
   width: 43%;
-  position: absolute;
+
+  cursor: pointer;
   height:auto;
 
+
  
-  left: 32%;
-  
-  
+  position: relative;
+  top: 19%;
+  left: 31%;
 
   box-shadow: 1px 1px 10px 1px #080808;
 }
@@ -381,6 +478,7 @@ function qianhuan(){
 height: 50%;
 overflow:hidden;
 width: 10%;
+top: 25%;
 background-color: rgb(27, 31, 31);
 position: absolute;
 left: 20%;

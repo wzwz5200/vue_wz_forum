@@ -1,11 +1,19 @@
 <script setup lang="ts">
 
+import { http } from '@/axios';
+import { useCounterStore } from '@/stores/counter';
 
 import { onMounted, ref } from 'vue'
-
+const cStore = useCounterStore()
 interface ListItem {
-  imgUrl: string
-  name: string
+    content: string;
+    created_at: string;
+    desc: string;
+    id: number;
+    img: string;
+    title: string;
+    updated_at: string;
+
 }
 
 const loading = ref(true)
@@ -13,31 +21,20 @@ const lists = ref<ListItem[]>([])
 
 
 
+const res =    await http.get("/them/list",{  params: {   thems : cStore.thems
+    } })
+    const extractedData = res.data
 
-onMounted(() => {
+    lists.value = extractedData.tag
+    console.log("hello",lists.value)
+  
+
+onMounted(async () => {
+    
  
-  lists.value = [
-    {
-      imgUrl:
-        'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg',
-      name: '游戏',
-    },
-    {
-      imgUrl:
-        'https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg',
-      name: '硬件',
-    },
-    {
-      imgUrl:
-        'https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg',
-      name: '软件',
-    },
-    {
-      imgUrl:
-        'https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg',
-      name: 'steam专区',
-    },
-  ]
+
+  
+
 })
 
 
@@ -45,7 +42,7 @@ onMounted(() => {
 <template>
 
 <n-grid x-gap="12"  :y-gap="15" :cols="1">
-      <n-gi v-for='(item,index) in lists'>
+    <n-gi v-for='(item,index) in cStore.listsz'>
       <div class="light-green"  >
 
         <n-avatar
@@ -56,7 +53,7 @@ onMounted(() => {
     />
 
     <div class="ghb">
-      <h3 style="position: absolute; left: 10%; top: -8%;">[游戏专区] 博德之门3 全DLC Baldur's Gate 3</h3>
+      <h3 style="position: absolute; left: 10%; top: -8%;">{{ item.content }}</h3>
      
     </div>
   
@@ -71,7 +68,7 @@ onMounted(() => {
           z"></path></g></g></svg>
       </n-icon>
 
-      <h3 class="user1"> 回复于：{{ item.name }} 2小时前</h3>
+      <h3 class="user1"> 回复于：{{ item.created_at}} 2小时前</h3>
 
       </div>
 

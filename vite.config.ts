@@ -19,14 +19,14 @@ export default defineConfig({
     
   },
   server: {
-    // proxy: {
-    //   '/proxy_url': {
-    //     target: 'http://127.0.0.1:8888',
-    //     // secure: false, // 请求是否为https
-    //     changeOrigin: true,
-    //     rewrite:(path)=>path.replace(/^\/proxy_url/,'') //api替换为'',
-    //   },
-    // },
+    proxy: {
+      '/proxy_url': {
+        target: 'http://127.0.0.1:4523/m1/5034143-4694392-default',
+        // secure: false, // 请求是否为https
+        changeOrigin: true,
+        rewrite:(path)=>path.replace(/^\/proxy_url/,'') //api替换为'',
+      },
+    },
    
     host: '0.0.0.0'
    

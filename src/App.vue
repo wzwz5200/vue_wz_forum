@@ -2,24 +2,52 @@
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 
+import { onMounted, ref } from 'vue'
 
-import { darkTheme } from "naive-ui";
+import { csCZ, darkTheme } from "naive-ui";
 import WelcomeItem from './components/WelcomeItem.vue';
+import router from './router';
+import { useCounterStore } from './stores/counter';
+import { http } from './axios';
+const cStore = useCounterStore()
+function Login(){
+
+  router.push({
+        name:'login',
+    
+    })
 
 
+}
 
+
+onMounted(async () => {
+ 
+  
+ const res =    await http.get("/page/list")
+ const extractedData = res.data
+ 
+ 
+ cStore.txt = extractedData.data
+ cStore.tips = extractedData.tag
+
+ console.log("data",cStore.txt)
+
+})
 
 
 </script>
 
 <template>
     <n-config-provider :theme="darkTheme" >
-      <n-space vertical size="large">
+      <n-space vertical size="large" >
     <n-layout class="header">
       <n-layout-header class="divbox2"  >
        <div>
-          <img src="../src/assets/logo.svg" class="img">
+          
     
+          <a href="/"><img src="../src/assets/logo.svg" class="img"></a>
+
      
        </div>
    
@@ -37,11 +65,11 @@ import WelcomeItem from './components/WelcomeItem.vue';
   </n-button>
         
   <n-input round placeholder="搜索"  class="input"/>
-  <n-button text style="font-size: 22px" class="but3">
+  <n-button text style="font-size:  22px" @click="Login()" class="but3">
     <n-icon>
       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><path d="M9 2h9c1.1 0 2 .9 2 2v16c0 1.1-.9 2-2 2H9c-1.1 0-2-.9-2-2v-1a1 1 0 0 1 2 0v1h9V4H9v1a1 1 0 1 1-2 0V4c0-1.1.9-2 2-2z" fill="currentColor"></path><path d="M10.795 16.295c.39.39 1.02.39 1.41 0l3.588-3.588a1 1 0 0 0 0-1.414l-3.588-3.588a.999.999 0 0 0-1.411 1.411L12.67 11H4a1 1 0 0 0 0 2h8.67l-1.876 1.884a.999.999 0 0 0 .001 1.411z" fill="currentColor"></path></svg>
     </n-icon>
-    <h1 style="font-size: medium;">登录</h1>
+    <h1 style="font-size: medium;"  >登录</h1>
   </n-button>
   <n-button text style="font-size: 22px" class="but4">
     <n-icon>
@@ -51,26 +79,14 @@ import WelcomeItem from './components/WelcomeItem.vue';
   </n-button>
 
       </n-layout-header>
-      <n-layout-content content-style="padding: 10px 0px 0px ;">
-      <WelcomeItem></WelcomeItem>
-      </n-layout-content>
-      <n-layout-footer class="footer" >
-       
-   
-        <div>
 
-        </div>
-      
-         
     
-    
-      </n-layout-footer>
     
     </n-layout>
 
-  
+    <RouterView />     
   </n-space>
-  <RouterView />   
+
   <n-global-style />
   </n-config-provider>
   
@@ -81,10 +97,6 @@ import WelcomeItem from './components/WelcomeItem.vue';
 <style scoped>
 
 .footer{
-  height: 100%;
-  width: 100%;
-
-  background-color: antiquewhite;
 
 }
 
@@ -220,4 +232,12 @@ background-color: #101014
 .n-layout-content {
 
 }
+
+html,
+body {
+	padding: 0;
+	margin: 0;
+	height: 100%;
+}
+
 </style>
