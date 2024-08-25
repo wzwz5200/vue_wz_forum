@@ -5,12 +5,14 @@ import Game from '@/views/thems/Game.vue'
 import Hardware from '@/views/thems/hardware.vue'
 import Login from '@/views/user/login.vue'
 import Allthems from '@/views/thems/allthems.vue'
+import Article from '@/views/article/article.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
+      
     
       component: HomeView,
       children: [
@@ -45,6 +47,14 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: Login
+    },
+    {
+      path: '/article',
+      name: 'Article',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: Article
     },
     
     

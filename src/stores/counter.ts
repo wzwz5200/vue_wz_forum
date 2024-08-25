@@ -12,7 +12,7 @@ export interface Datum {
 }
 
 export interface Tag {
-  name?: string;
+  tag?: string;
   [property: string]: any;
 }
 

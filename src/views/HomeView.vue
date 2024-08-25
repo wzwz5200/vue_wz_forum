@@ -10,7 +10,7 @@ import { useCounterStore } from '@/stores/counter';
 const cStore = useCounterStore()
 interface Tag {
 
-  name: string;
+  tag: string;
 }
 
 interface Category {
@@ -63,11 +63,11 @@ const lists = ref<Tag[]>([])
 onMounted(async () => {
  
   
-  const res =    await http.get("/page/list")
+  const res =    await http.get("/FH/get_tag")
   const extractedData = res.data
   
   
-  lists.value = extractedData.tag
+  lists.value = extractedData.data.TAG
   
   console.log(lists.value)
   
@@ -85,27 +85,28 @@ router.push({ path: '/'})
 }
 
 
+
 async function qianhuan(name: any){
 
   console.log("w")
 //传入主题参数到帖子组件使用get方法获取传入主题的所有帖子
 //待实现
 
+cStore.thems = name
+
+console.log("hello1",name)
 
 
 
-const res =    await http.get("/them/list",{  params: {   thems : cStore.thems
-    } })
-    const extractedData = res.data
 
+  router.push({ name: 'allthems',state: {
+
+   TAG:name
+
+} }
+    
+   )
   
-    cStore.listsz = extractedData.tag
-    console.log("hello1",cStore.listsz)
-  
-
-
-  cStore.thems = name
-  router.push({ name: 'allthems' })
 
 
 }
@@ -145,7 +146,7 @@ const res =    await http.get("/them/list",{  params: {   thems : cStore.thems
 
 
           <n-gi  v-for="tag in  lists" >
-          <n-button text class="but8" @click="qianhuan(tag.name)">
+          <n-button text class="but8" @click="qianhuan(tag.tag)">
           <template #icon>
             <n-icon>
               <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16"></path><path d="M8 12h8"></path><path d="M6 18h12"></path></g></svg>
@@ -156,7 +157,7 @@ const res =    await http.get("/them/list",{  params: {   thems : cStore.thems
           
           <div style=" height: 10%; width: 500%;">
       
-            <h3>{{ tag.name }}</h3>
+            <h3>{{ tag.tag }}</h3>
           </div>
             
       
