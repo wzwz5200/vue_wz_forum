@@ -1,6 +1,7 @@
 
 <script setup lang="ts">
 
+import router from '@/router';
 import TheWelcome from '../components/TheWelcome.vue'
 
 import { useCounterStore } from '@/stores/counter';
@@ -26,9 +27,18 @@ onMounted(() => {
 
 
 })
-function test(){
+function test(psot_id: any ){
+
+  //传入文章id参数跳转并获取文章详情
 
   console.log(lists)
+  router.push({ name: 'Article' , 
+  state: {
+
+   POST_ID: psot_id
+}
+  }) 
+
 
 }
 
@@ -37,7 +47,7 @@ function test(){
 <template>
  <n-grid x-gap="12"  :y-gap="15" :cols="1">
       <n-gi v-for='(cv,index) in useCounter.txt' :key="index">
-      <div class="light-green"  @click="test()" >
+      <div class="light-green"  @click="test(cv.id)" >
 
         <n-avatar
       round

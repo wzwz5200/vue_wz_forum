@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
 import { http } from '@/axios';
+import router from '@/router';
 import { useCounterStore } from '@/stores/counter';
 
 import { onMounted, ref } from 'vue'
@@ -16,22 +17,40 @@ interface ListItem {
 
 }
 
+
+
+
+function post_id(psot_id: any){
+
+  router.push({ name: 'Article' , 
+  state: {
+
+   POST_ID: psot_id
+}
+  }) 
+
+
+
+}
+
 const loading = ref(true)
 const lists = ref<ListItem[]>([])
 
 
+const res =    await http.get("/FH/thems",{  params: {   tag : history.state.TAG
 
-const res =    await http.get("/them/list",{  params: {   thems : cStore.thems
-    } })
-    const extractedData = res.data
+} })
+const extractedData = res.data.data
 
-    lists.value = extractedData.tag
-    console.log("hello",lists.value)
+lists.value = extractedData.ALLPost
+console.log("ALLTHES",history.state.TAG)
   
 
 onMounted(async () => {
     
  
+
+
 
   
 
@@ -42,8 +61,8 @@ onMounted(async () => {
 <template>
 
 <n-grid x-gap="12"  :y-gap="15" :cols="1">
-    <n-gi v-for='(item,index) in cStore.listsz'>
-      <div class="light-green"  >
+    <n-gi v-for='(item,index) in lists'>
+      <div @click="post_id(item.id)" class="light-green"  >
 
         <n-avatar
       round
