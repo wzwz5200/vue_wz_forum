@@ -35,9 +35,30 @@ import { ref } from 'vue';
 import { EditPen } from '@element-plus/icons-vue';
 
 const router = useRouter();
-const categories = ["全部", "游戏", "编程", "生活"];
 const selectedCategory = ref('全部');
 const emit = defineEmits(["categorySelected"]);
+
+// 获取分类列表
+const { data: categories } = await useAsyncData(
+  'categories',
+  async () => {
+    try {
+      const response = await fetch(
+        'http://127.0.0.1:4523/m1/5762725-5446332-default/api/categories'
+      );
+      if (!response.ok) {
+        throw new Error('获取分类失败');
+      }
+      const result = await response.json();
+      // 确保返回的是字符串数组格式
+      return ['全部', ...result.data.categories.map(cat => cat.name)];
+    } catch (error) {
+      console.error('获取分类失败:', error);
+      // 使用默认分类作为后备
+      return ["全部", "游戏", "编程", "生活"];
+    }
+  }
+);
 
 const handleCategoryClick = (category) => {
   selectedCategory.value = category;

@@ -104,12 +104,77 @@
     <el-footer class="app-footer">
       版权所有 © 2025
     </el-footer>
+
+    <!-- 添加发布文章抽屉 -->
+    <el-drawer
+      v-model="showPublishDrawer"
+      direction="btt"
+      size="100%"
+      :with-header="false"
+      destroy-on-close
+    >
+      <div class="publish-drawer">
+        <div class="drawer-header">
+          <h2>发布文章</h2>
+          <el-button 
+            type="primary" 
+            link 
+            class="close-btn"
+            @click="showPublishDrawer = false"
+          >
+            <el-icon class="close-icon"><Close /></el-icon>
+          </el-button>
+        </div>
+        
+        <div class="drawer-content">
+          <el-form :model="publishForm" class="publish-form">
+            <el-form-item>
+              <el-input
+                v-model="publishForm.title"
+                placeholder="请输入文章标题"
+                class="title-input"
+              />
+            </el-form-item>
+            
+            <el-form-item>
+              <el-select
+                v-model="publishForm.category"
+                placeholder="选择分类"
+                class="category-select"
+              >
+                <el-option
+                  v-for="item in categories"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                />
+              </el-select>
+            </el-form-item>
+            
+            <el-form-item>
+              <el-input
+                v-model="publishForm.content"
+                type="textarea"
+                :rows="12"
+                placeholder="在此输入文章内容（支持 Markdown 格式）"
+                class="content-input"
+              />
+            </el-form-item>
+          </el-form>
+        </div>
+        
+        <div class="drawer-footer">
+          <el-button @click="showPublishDrawer = false">取消</el-button>
+          <el-button type="primary" @click="handlePublish">发布文章</el-button>
+        </div>
+      </div>
+    </el-drawer>
   </el-container>
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import { User, UserFilled, EditPen } from '@element-plus/icons-vue';
+import { User, UserFilled, EditPen, Close } from '@element-plus/icons-vue';
 import LoadingScreen from '~/components/LoadingScreen.vue';
 
 const currentCategory = ref('全部');
@@ -130,8 +195,51 @@ const handleCategoryChange = (category) => {
   currentCategory.value = category;
 };
 
+const showPublishDrawer = ref(false);
+const publishForm = ref({
+  title: '',
+  category: '',
+  content: ''
+});
+
+// 获取分类列表
+const { data: categoryData } = await useAsyncData(
+  'categories',
+  async () => {
+    try {
+      const response = await fetch(
+        'http://127.0.0.1:4523/m1/5762725-5446332-default/api/categories'
+      );
+      if (!response.ok) {
+        throw new Error('获取分类失败');
+      }
+      const result = await response.json();
+      return result.data.categories;
+    } catch (error) {
+      console.error('获取分类失败:', error);
+      // 使用默认分类作为后备
+      return ["游戏", "编程", "生活"];
+    }
+  }
+);
+
+const categories = computed(() => {
+  return categoryData.value || ["游戏", "编程", "生活"];
+});
+
+// 修改导航方法
 const navigateTo = (path) => {
-  router.push(path);
+  if (path === '/publish') {
+    showPublishDrawer.value = true;
+  } else {
+    router.push(path);
+  }
+};
+
+const handlePublish = () => {
+  // 处理发布逻辑
+  console.log('发布文章:', publishForm.value);
+  showPublishDrawer.value = false;
 };
 
 const isLoading = ref(false);
@@ -166,34 +274,43 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   text-align: center;
+  padding: 1rem 0;
 }
 
 .welcome-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 0.8rem; /* 减小间距 */
+  transform: translateY(-0.5rem); /* 整体向上移动 */
 }
 
 .Welcome_box h3 {
   margin: 0;
+  font-size: 1.6rem;
+  margin-bottom: -0.2rem; /* 标题稍微向下移动 */
 }
 
 .publish-welcome-btn {
-  background: linear-gradient(90deg, #409EFF, #36D1DC);
-  border: none;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.7);
   height: 2.5rem;
-  padding: 0 1.5rem;
+  padding: 0 1.8rem;
   font-size: 1rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
 }
 
 .publish-welcome-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(64, 158, 255, 0.3);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #fff;
+  color: #fff;
+  transform: scale(1.05);
 }
 
 .publish-icon {
@@ -366,13 +483,20 @@ html.dark {
 }
 
 .publish-button {
-  background: rgba(64, 158, 255, 0.1);
-  border-radius: 4px;
+  background: transparent;
+  border: 2px solid rgba(64, 158, 255, 0.7);
+  border-radius: 6px;
   padding: 0 15px;
+  height: 32px;
+  color: rgba(64, 158, 255, 0.9) !important;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
 .publish-button:hover {
-  background: rgba(64, 158, 255, 0.2);
+  background: rgba(64, 158, 255, 0.7);
+  color: #fff !important;
+  transform: scale(1.05);
 }
 
 /* 响应式调整 */
@@ -387,6 +511,15 @@ html.dark {
   
   .publish-button {
     padding: 0 10px;
+    height: 28px;
+    border-width: 1.5px;
+  }
+  
+  .publish-welcome-btn {
+    height: 2.2rem;
+    padding: 0 1.2rem;
+    font-size: 0.9rem;
+    border-width: 1.5px;
   }
 }
 
@@ -412,5 +545,95 @@ html.dark {
 
 .publish-icon {
   font-size: 1.2rem;
+}
+
+.publish-drawer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--el-bg-color);
+}
+
+.drawer-header {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--el-border-color-lighter);
+}
+
+.drawer-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--el-text-color-primary);
+}
+
+.close-btn {
+  font-size: 1.2rem;
+}
+
+.drawer-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.publish-form {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.title-input :deep(.el-input__wrapper) {
+  font-size: 1.2rem;
+}
+
+.category-select {
+  width: 200px;
+}
+
+.content-input :deep(.el-textarea__inner) {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.drawer-footer {
+  padding: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  border-top: 1px solid var(--el-border-color-lighter);
+}
+
+/* 抽屉底部按钮 */
+.drawer-footer .el-button--primary {
+  background: transparent;
+  border: 2px solid rgba(64, 158, 255, 0.7);
+  color: rgba(64, 158, 255, 0.9);
+  font-weight: 500;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.drawer-footer .el-button--primary:hover {
+  background: rgba(64, 158, 255, 0.7);
+  color: #fff;
+  transform: scale(1.05);
+}
+
+.drawer-footer .el-button {
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .drawer-content {
+    padding: 15px;
+  }
+  
+  .publish-form {
+    width: 100%;
+  }
 }
 </style>
